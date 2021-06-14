@@ -18,4 +18,4 @@ function get_code_geeks(req,res){
     } )
     // res.send(process)
 }
-app.listen(8000,()=>{console.log("listening on port 8000")})
+app.listen(process.env.PORT,()=>{console.log("listening on port 8000")})
