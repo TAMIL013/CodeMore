@@ -5,6 +5,8 @@ from selenium import webdriver
 import time
 import re
 import json
+import os
+from os import path
 
 driver_path = "./chromedriver.exe"
 brave_path = "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
@@ -19,10 +21,9 @@ driver = webdriver.Chrome(executable_path=driver_path, chrome_options=option)
 
 
 All_code=[]
-def WriteFile(li):
-    f=open("geeks.txt","a")
-    f.write(li)
-    f.close()
+if(str(path.isfile('result_geeks.txt'))=="True"):
+    os.remove('result_geeks.txt')
+  
 
 def get_code_geeksforgeeks(url):  
     driver.get(url) 
@@ -32,8 +33,8 @@ def get_code_geeksforgeeks(url):
 
     table=soup.find('div',{'id':'problemFeed'})
     row=table.find_all('div',{'class':'problem-block'})
-    f=open("geeks.txt","w")
-    f.write("")
+    f=open("geeks.txt","a") #create file
+    
     f.write("{")
     for cd in row:
         link=cd.find('a', href=re.compile("problems"))
@@ -46,20 +47,13 @@ def get_code_geeksforgeeks(url):
         f.write("{'title':'"+title+"','link':'"+link.get('href')+"'}")
     f.write("}")
     f.close()
-    
+    os.rename('geeks.txt','result_geeks.txt')
     # for i in All_code:
     #     print(i)
 
-url = "https://practice.geeksforgeeks.org/explore/?page=1&category%5B%5D=Kadane"
+# url = "https://practice.geeksforgeeks.org/explore/?page=1&category%5B%5D=Kadane"
 url1="https://practice.geeksforgeeks.org/explore/?page"
 url2="=1&category%5B%5D="
-# url=url1+url2+sys.argv[1]
+url=url1+url2+sys.argv[1]
 get_code_geeksforgeeks(url)
-# output=json.dumps(All_code,separators=(',',':'))
-# print(output)
-
-# print(All_code)
-# WriteFile({'ddd'})
-f=open("geeks.txt","r")
-# print(f.read())
 
