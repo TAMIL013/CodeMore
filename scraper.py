@@ -32,7 +32,8 @@ driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), c
 All_code=[]
 if(str(path.isfile('result_geeks.txt'))=="True"):
     os.remove('result_geeks.txt')
-  
+if(str(path.isfile('geeks.txt'))=="True"):
+    os.remove('geeks.txt') 
 
 def get_code_geeksforgeeks(url):  
     driver.get(url) 
