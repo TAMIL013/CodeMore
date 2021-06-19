@@ -7,17 +7,26 @@ import re
 import json
 import os
 from os import path
+#-------------for localhost-------------------
+# driver_path = "./chromedriver.exe"
+# # brave_path = "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
 
-driver_path = "./chromedriver.exe"
-brave_path = "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
+# option = webdriver.ChromeOptions()
+# # option.binary_location = brave_path
+# # # option.add_argument("--incognito") OPTIONAL
+# option.add_argument("--headless") 
 
-option = webdriver.ChromeOptions()
-option.binary_location = brave_path
-# # option.add_argument("--incognito") OPTIONAL
-option.add_argument("--headless") 
+# # # Create new Instance of Chrome
+# driver = webdriver.Chrome(executable_path=driver_path, chrome_options=option)
 
-# # Create new Instance of Chrome
-driver = webdriver.Chrome(executable_path=driver_path, chrome_options=option)
+#---------------for heroku----------------
+chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+
 
 
 All_code=[]
