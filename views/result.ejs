@@ -25,11 +25,11 @@
     contentType: "application/json",
     success: function (result) {
         clearInterval(interval);
-        console.log("result-success");
+        // console.log("result-success");
         document.getElementById("res").innerHTML=result;
     },
     error: function(result){
-        console.log("result");
+        // console.log("result");
         document.getElementById("res").innerHTML=result;
        
     } 

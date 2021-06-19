@@ -27,7 +27,7 @@ if(str(path.isfile('result_geeks.txt'))=="True"):
 
 def get_code_geeksforgeeks(url):  
     driver.get(url) 
-    # time.sleep(5) 
+    count_of_problem=0
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
 
@@ -37,6 +37,7 @@ def get_code_geeksforgeeks(url):
     
     f.write("{")
     for cd in row:
+        count_of_problem=count_of_problem+1
         link=cd.find('a', href=re.compile("problems"))
         title=cd.find('span').text
         code={
@@ -46,14 +47,17 @@ def get_code_geeksforgeeks(url):
         All_code.append(code)
         f.write("{'title':'"+title+"','link':'"+link.get('href')+"'}")
     f.write("}")
+    f.write("total no of problems:"+str(count_of_problem))
     f.close()
+    print(count_of_problem)
     os.rename('geeks.txt','result_geeks.txt')
     # for i in All_code:
     #     print(i)
 
-# url = "https://practice.geeksforgeeks.org/explore/?page=1&category%5B%5D=Kadane"
+
 url1="https://practice.geeksforgeeks.org/explore/?page"
 url2="=1&category%5B%5D="
-url=url1+url2+sys.argv[1]
-get_code_geeksforgeeks(url)
+Main_url=url1+url2+sys.argv[1]
+
+get_code_geeksforgeeks(Main_url)
 

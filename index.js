@@ -28,8 +28,11 @@ function get_code_geeks(req,res){
     var spawn = require("child_process").spawn;
  
     spawn('python',["./scraper.py",req.query.category]);
-    res.render('result');
+    // process.stdout.on('data', function(data) {
+    //     console.log(data.toString());
+    // } )
+     res.render('result');
     // 
     
 }
-app.listen(process.env.PORT,()=>{console.log("listening on port 8000")})
+app.listen(8000||process.env.PORT,()=>{console.log("listening on port 8000")})
