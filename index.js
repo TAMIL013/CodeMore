@@ -24,13 +24,17 @@ app.get('/py/res',(req,res)=>{
   })
 })
 function get_code_geeks(req,res){
-    url = "https://practice.geeksforgeeks.org/explore/?page=1&category%5B%5D=Kadane"
     var spawn = require("child_process").spawn;
  
-    spawn('python',["./scraper.py",req.query.category]);
-    // process.stdout.on('data', function(data) {
-    //     console.log(data.toString());
-    // } )
+    var process=spawn('python',["./scraper.py",req.query.category]);
+    process.stdout.on('data', function(data) {
+        console.log(data.toString());
+        // res.send(data.toString());
+    } )
+    process.stderr.on('data',function(data){
+      console.log(data.toString());
+      // res.send(data.toString());
+    });
      res.render('result');
     // 
     
