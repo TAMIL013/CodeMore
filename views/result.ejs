@@ -25,8 +25,10 @@
     contentType: "application/json",
     success: function (result) {
         clearInterval(interval);
-        // console.log("result-success");
-        document.getElementById("res").innerHTML=result;
+        console.log(result);
+        // var json=JSON.stringify(result);
+        // var arr=JSON.parse(result);
+        document.getElementById("res").innerHTML=result[0].title;
     },
     error: function(result){
         // console.log("result");

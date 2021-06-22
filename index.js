@@ -18,14 +18,15 @@ app.get('/py/res',(req,res)=>{
       }
       else{
         //   console.log(data.toString());
-          res.send(data.toString());
-
+        data=JSON.parse(data)
+          res.json(data);
+        // res.send(data)
       }
   })
 })
 function get_code_geeks(req,res){
     var spawn = require("child_process").spawn;
- 
+  console.log(req.query.category);
     var process=spawn('python',["./scraper.py",req.query.category]);
     process.stdout.on('data', function(data) {
         console.log(data.toString());

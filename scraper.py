@@ -39,27 +39,26 @@ if(str(path.isfile('geeks.txt'))=="True"):
 def get_code_geeksforgeeks(url):  
     try:
         driver.get(url) 
-        count_of_problem=0
+       
         html = driver.page_source
         soup = BeautifulSoup(html, "html.parser")
 
         table=soup.find('div',{'id':'problemFeed'})
         row=table.find_all('div',{'class':'problem-block'})
-        f=open("geeks.txt","a") #create file
-        
-        f.write("{")
         for cd in row:
-            count_of_problem=count_of_problem+1
+            
             link=cd.find('a', href=re.compile("problems"))
             title=cd.find('span').text
             code={
-                'title':title,
-                'link':link.get('href')
+                "title":title,
+                "link":link.get('href')
             }
             All_code.append(code)
-            f.write("{'title':'"+title+"','link':'"+link.get('href')+"'}")
-        f.write("}")
-        f.write("total no of problems:"+str(count_of_problem))
+            
+        f=open("geeks.txt","w") #create file
+        # f.write("'")
+        f.write(json.dumps(All_code))
+        # f.write("'")
         f.close()
         # print(count_of_problem)
         os.rename('geeks.txt','result_geeks.txt')
@@ -70,10 +69,19 @@ def get_code_geeksforgeeks(url):
     #     print(i)
 
 
-url1="https://practice.geeksforgeeks.org/explore/?page"
-url2="=1&category%5B%5D="
-Main_url=url1+url2+sys.argv[1]
+# page=1&category%5B%5D=Arrays&category%5B%5D=Dynamic%20Programming
 
-get_code_geeksforgeeks(Main_url)
-# print("tamil")
-print(All_code)
+url1="https://practice.geeksforgeeks.org/explore/?page=1"
+url2="&category%5B%5D="
+# Main_url=url1+url2+sys.argv[1]
+def getURL(url1,url2,x):
+    Main_url=url1
+    category=x.split(',')
+    for i in category:
+        Main_url=Main_url+url2+i
+    return Main_url    
+final_url=getURL(url1,url2,str(sys.argv[1]))
+# final_url="https://practice.geeksforgeeks.org/explore/?category%5B%5D=Arrays&page=1&category%5B%5D=Arrays"
+get_code_geeksforgeeks(final_url)
+
+# print(json.dumps(All_code))
