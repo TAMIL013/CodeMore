@@ -76,7 +76,7 @@ url2="&category%5B%5D="
 # Main_url=url1+url2+sys.argv[1]
 def getURL(url1,url2,x):
     Main_url=url1
-    category=x.split(',')
+    category=x.split(',') 
     for i in category:
         Main_url=Main_url+url2+i
     return Main_url    
