@@ -31,7 +31,7 @@ chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument('--ignore-certificate-errors')
 chrome_options.add_argument('--ignore-ssl-errors')
 driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
-driver.implicitly_wait(10)
+# driver.implicitly_wait(10)
 geeks_link_dict={
 "array":"Arrays",
 "dynamic-programming":"Dynamic%20Programming",
@@ -131,7 +131,7 @@ def WriteFile(All_code):
     f.close()
     os.rename('geeks.txt','result_geeks.txt')
 
-\
+
 
 def get_all_code(cat):
     get_code_leetcode("https://leetcode.com/tag/"+cat)
