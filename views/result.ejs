@@ -28,7 +28,7 @@
         console.log(result);
         // var json=JSON.stringify(result);
         // var arr=JSON.parse(result);
-        document.getElementById("res").innerHTML=result[0].length;
+        document.getElementById("res").innerHTML=result[0].length+result[0][0].title+" | "+result[1][0].title;
         
     },
     error: function(result){

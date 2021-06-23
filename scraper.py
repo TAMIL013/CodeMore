@@ -31,7 +31,7 @@ chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument('--ignore-certificate-errors')
 chrome_options.add_argument('--ignore-ssl-errors')
 driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
-# driver.implicitly_wait(10)
+driver.implicitly_wait(10)
 geeks_link_dict={
 "array":"Arrays",
 "dynamic-programming":"Dynamic%20Programming",
@@ -145,3 +145,4 @@ get_all_code(str(sys.argv[1]))
 
 WriteFile(All_code)
 
+print(All_code)
