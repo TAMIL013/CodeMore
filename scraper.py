@@ -14,14 +14,17 @@ from selenium.webdriver.chrome.options import Options
 
 # option = webdriver.ChromeOptions()
 # option.binary_location = brave_path
-# # # option.add_argument("--incognito") OPTIONAL
+# # option.add_argument("--incognito")
+# option.add_experimental_option("excludeSwitches", ["enable-automation"])
+# option.add_experimental_option('useAutomationExtension', False)
+# option.add_argument("--disable-blink-features=AutomationControlled") 
 # option.add_argument("--headless") 
-# option.add_argument('--ignore-certificate-errors')
-# option.add_argument('--ignore-ssl-errors')
+# # option.add_argument('--ignore-certificate-errors')
+# # option.add_argument('--ignore-ssl-errors')
 # # # Create new Instance of Chrome
 # driver = webdriver.Chrome(executable_path=driver_path, options=option)
-# driver.implicitly_wait(10)
-
+# driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.53 Safari/537.36'})
+# driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 #---------------for heroku----------------
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -30,8 +33,13 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument('--ignore-certificate-errors')
 chrome_options.add_argument('--ignore-ssl-errors')
+chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+chrome_options.add_experimental_option('useAutomationExtension', False)
+chrome_options.add_argument("--disable-blink-features=AutomationControlled") 
 driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
-driver.implicitly_wait(10)
+driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.53 Safari/537.36'})
+driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+# driver.implicitly_wait(10)
 geeks_link_dict={
 "array":"Arrays",
 "dynamic-programming":"Dynamic%20Programming",
@@ -88,18 +96,21 @@ if(str(path.isfile('geeks.txt'))=="True"):
     os.remove('geeks.txt') 
 
 def get_code_leetcode(url):  
+    driver.implicitly_wait(10)
     try:
-        driver.get(url) 
-        table=driver.find_element_by_xpath('/html/body/div[2]/div/div/div/div/div/div[2]/table')
-        row=table.find_elements_by_class_name("title-cell__ZGos")   
+        driver.get(url)  
+        table=driver.find_element_by_xpath('/html/body/div[2]/div/div/div/div/div/div[2]/table/tbody')
+        row=table.find_elements_by_tag_name("tr")  
         # print(row)
         leet_code=[]
         for div in row:
             title=div.find_element_by_tag_name("a").get_attribute("innerHTML")
             link=div.find_element_by_tag_name("a").get_attribute("href")
+            difficulty=div.find_element_by_class_name("label").get_attribute("innerHTML")
             code={
                 "title":title,
-                "link":link
+                "link":link,
+                "difficulty":difficulty
             }
             leet_code.append(code)
         All_code.append(leet_code) 
@@ -108,23 +119,34 @@ def get_code_leetcode(url):
         print(e.__class__)
 
 def get_code_geeksforgeeks(url):  
+    driver.implicitly_wait(20)
     try:
         driver.get(url) 
         table=driver.find_element_by_xpath('/html/body/div[10]/div[4]/div[2]/div[3]')
         row=table.find_elements_by_class_name('problem-block')
+        
         geeks=[]
+        div_count=2
         for div in row:
             link=div.find_element_by_tag_name("a").get_attribute("href")
             title=div.find_element_by_tag_name("span").get_attribute("innerHTML")
+           
+            # /html/body/div[10]/div[4]/div[2]/div[3]/div[4]/div/div/div/div[1]
+            path="/html/body/div[10]/div[4]/div[2]/div[3]/div["+str(div_count)+"]/div/div/div/div[1]"
+            difficulty=div.find_element_by_xpath(path).get_attribute("title")
+            div_count=div_count+1
+            # print(difficulty)
             code={
                 "title":title,
                 "link":link,
+                "difficulty":difficulty
             }
             geeks.append(code)
         All_code.append(geeks)
     except Exception as e:
         print(e.__class__)
-        
+# get_code_geeksforgeeks("https://practice.geeksforgeeks.org/explore/?page=1&category%5B%5D=Game%20Theory")
+# print(len(All_code[0]))
 def WriteFile(All_code):            
     f=open("geeks.txt","w") #create file
     f.write(json.dumps(All_code))
@@ -134,6 +156,7 @@ def WriteFile(All_code):
 
 
 def get_all_code(cat):
+    All_code.append([cat])
     get_code_leetcode("https://leetcode.com/tag/"+cat)
     if cat in geeks_link_dict:
         get_code_geeksforgeeks("https://practice.geeksforgeeks.org/explore/?c&page=1&category%5B%5D="+geeks_link_dict[cat])

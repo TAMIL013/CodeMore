@@ -1,0 +1,25 @@
+/* .main_container{
+    overflow-y: hidden;
+} */
+/* .tag_container{
+    margin-top: 1rem;
+} */
+a{
+    text-decoration: unset;
+    color:#000000;
+}
+a:hover{
+    color: #00acee;
+}
+#nav-bar{
+    background-color: #ffffff;
+}
+.table_head{
+    background-color: #f2f2f2;
+}
+.clr a:hover{
+    color: green;
+}
+.clr a:visited{
+    color:red;
+}

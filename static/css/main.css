@@ -1,0 +1,39 @@
+/* body{
+    overflow-x: hidden;
+} */
+.top_root_container{
+    width: 100%;
+    position: fixed;
+}
+.root_container{
+    width: 100%;
+    height: 100vh;
+ 
+    display: flex;
+}
+.left_container{
+    flex:1.25;   
+    display: flex; 
+    overflow-y: scroll;
+    
+}
+::-webkit-scrollbar{
+    width:2px;
+    background-color: #f2f2f2;
+    
+    /* border-radius: 100%; */
+}
+/* ::-webkit-scrollbar-thumb{
+    background-color:gray
+    
+    
+    
+} */
+
+.right_container{
+    flex:4;
+    background-color: #ffffff;
+    /* display: flex; */
+    /* flex-direction: column; */
+   overflow-y: auto;
+}

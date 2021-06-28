@@ -1,0 +1,21 @@
+/* .sidenav_container{
+ 
+} */
+
+.topic_tag{
+    display: flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+}
+.topic_tag a{
+    text-decoration: none;
+    color: #808080;
+    border: 1px solid #E5E5E5;
+    margin-right: 2%;
+    margin-top:2%;
+}
+.topic_tag a:hover{
+    background-color: #00ACEE;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+}
