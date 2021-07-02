@@ -9,6 +9,7 @@ function call(){
  // data:data,
  contentType: "application/json",
  success: function (result) {
+     document.getElementById("loading").setAttribute("class","invisible"); 
      clearInterval(interval);
      console.log(result);
     //  array=result;
@@ -20,6 +21,8 @@ function call(){
  },
  error: function(result){
      // console.log("result");
+    document.getElementById("loading").setAttribute("class","visible"); 
+    
      console.log(result);
     
  } 

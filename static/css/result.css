@@ -23,3 +23,12 @@ a:hover{
 .clr a:visited{
     color:red;
 }
+#loading{
+    position: fixed;
+    width: 100%;
+    
+    /* padding-left:50% ; */
+    margin-top:40vh;
+    margin-left: 35vw;
+    /* background-color: aqua; */
+}

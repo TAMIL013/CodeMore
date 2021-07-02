@@ -12,6 +12,7 @@ topic_tag.forEach(element => {
     ele.forEach(e=>{
         element2+=( e.charAt(0).toUpperCase() + e.slice(1)+" ");
     });
-    tag.innerHTML+=`<a class="btn btn-sm" href="/py?category=${element}"  role="button">${element2}</a>`;
+    tag.innerHTML+=`<a class="btn btn-sm " href="/py?category=${element}"  role="button">${element2}</a>`;
     
 });
+
